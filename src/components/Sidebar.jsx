@@ -23,7 +23,7 @@ const Sidebar = () => {
     >
       <button
         onClick={() => dispatch(setSidebarOff())}
-        className="absolute top-4 right-4 text-gray-600 hover:text-orange-500"
+        className="absolute top-4 right-4 text-white hover:text-orange-500"
       >
         <RxCross2 className="text-2xl"/>
       </button>

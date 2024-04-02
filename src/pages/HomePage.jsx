@@ -20,7 +20,7 @@ const HomePage = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchAsyncProducts(50));
+    dispatch(fetchAsyncProducts(100));
   }, []);
 
   useEffect(()=>{

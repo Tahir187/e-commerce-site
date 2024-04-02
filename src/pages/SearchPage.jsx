@@ -47,7 +47,7 @@ const SearchPage = () => {
       </div>
       <div className="search-content flex justify-center items-center mx-auto  bg-gradient-to-br from-transparent via-purple-300 to-transparent">
         <div className="container ">
-          <div className="py-5">
+          <div className="py-5 flex justify-center flex-col items-center">
             <div className="title-md">
               <h3>Search results:</h3>
             </div>
