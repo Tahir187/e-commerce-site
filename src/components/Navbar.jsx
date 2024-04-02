@@ -91,7 +91,7 @@ const Navbar = () => {
             to={`search/${searchTerm}`}
             className="search-btn text-2xl"
           >
-            <FaSearch className="text-gray-600 -ml-9" />
+            <FaSearch className="mr-2 ml-2 md:text-gray-600 md:-ml-9" />
           </Link>
         </div>
       </div>
