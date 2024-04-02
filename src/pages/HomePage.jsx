@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderSlider from "../components/HeaderSlider";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllCategories } from "../store/categorySlice";
@@ -14,13 +14,38 @@ import FilterSidebar from "../components/FilterSidebar";
 const HomePage = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getAllCategories);
+  const products = useSelector(getAllProducts);
+  const productStatus = useSelector(getAllProductsStatus);
+  const [sortBy, setSortBy] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     dispatch(fetchAsyncProducts(50));
   }, []);
 
-  const products = useSelector(getAllProducts);
-  const productStatus = useSelector(getAllProductsStatus);
+  useEffect(()=>{
+    setFilteredProducts([...products]);
+  },[products]);
+
+  const handleSortByChange = (sortByOption) =>{
+    setSortBy(sortByOption);
+    if(sortByOption === "lowest"){
+      setFilteredProducts([...filteredProducts.sort((a,b) => a.price - b.price)]);
+    }else if(sortByOption === "highest"){
+      setFilteredProducts([...filteredProducts.sort((a,b) =>b.price - a.price)]);
+    }
+  }
+
+  const handleFilterByRating = (minRating) =>{
+    const filterByRating = products.filter((product) => product.rating >= minRating);
+    console.log("rating", filterByRating);
+    setFilteredProducts([...filterByRating]);
+  }
+  const handleClearFilters = () => {
+    setSortBy("");
+    setFilteredProducts([...products]);
+    console.log('filters cleared');
+  };
 
   // randomizing the products in the list
   const tempProducts = [];
@@ -35,25 +60,17 @@ const HomePage = () => {
     }
   }
 
-  let catProductsOne = products.filter(
-    (product) => product.category === categories[0]
-  );
-  let catProductsTwo = products.filter(
-    (product) => product.category === categories[1]
-  );
-  let catProductsThree = products.filter(
-    (product) => product.category === categories[2]
-  );
-  let catProductsFour = products.filter(
-    (product) => product.category === categories[3]
-  );
 
   return (
     <main className="bg-gradient-to-br from-transparent via-purple-300 to-transparent">
       <div className="slider-wrapper mb-8">
         <HeaderSlider />
       </div>
-      <FilterSidebar />
+      <FilterSidebar 
+      onSortByChange={handleSortByChange} 
+      onFilterByRating={handleFilterByRating}
+      onClearFilters={handleClearFilters}
+      />
 
       <div className="main-content min-h-screen">
         <div className="container mx-auto">
@@ -67,13 +84,7 @@ const HomePage = () => {
                   ) : (
                     <ProductList
                       products={
-                        index === 0
-                          ? catProductsOne
-                          : index === 1
-                          ? catProductsTwo
-                          : index === 2
-                          ? catProductsThree
-                          : catProductsFour
+                        filteredProducts.filter(product => product.category === category)
                       }
                     />
                   )}

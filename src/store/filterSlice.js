@@ -1,28 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { STATUS } from "../utils/status";
 
 const initialState = {
-  category: [],
-  categoriesStatus: STATUS.IDLE,
-  categoryProducts: [],
-  categoryProductsStatus: STATUS.IDLE,
+  priceFilter: null, 
+  ratingFilter: null,
 };
 
-export const filterSlice = createSlice({
-  name: "category",
+const filterSlice = createSlice({
+  name: "filter",
   initialState,
   reducers: {
-    productReducer: (state, action) => {
-      switch (action.type) {
-        case "SORT_BY_PRICE":
-          return { ...state, sort: action.payload };
-
-        case "FILTER_BY_RATING":
-          return { ...state, rating: action.payload };
-
-        default:
-          return state;
-      }
+    setPriceFilter: (state, action) => {
+      state.priceFilter = action.payload;
+    },
+    setRatingFilter: (state, action) => {
+      state.ratingFilter = action.payload;
+    },
+    clearFilters: (state) => {
+      state.priceFilter = null;
+      state.ratingFilter = null;
     },
   },
 });
+
+export const { setPriceFilter, setRatingFilter, clearFilters } = filterSlice.actions;
+export const getPriceFilter = (state) => state.filter.priceFilter;
+export const getRatingFilter = (state) => state.filter.ratingFilter;
+
+export default filterSlice.reducer;

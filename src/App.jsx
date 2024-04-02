@@ -9,7 +9,6 @@ import Footer from "./components/Footer";
 import store from "./store/store";
 import {Provider} from "react-redux";
 import { Loader } from './components';
-import NewNavbar from './components/NewNavbar';
 const Home = lazy(() => import('./pages/HomePage'));
 
 
