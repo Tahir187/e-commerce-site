@@ -79,7 +79,7 @@ const Navbar = () => {
             <CartModal carts={carts} className="hidden" />
           </Link>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center px-2">
           <input
             type="text"
             className="text-gray-600 w-full
